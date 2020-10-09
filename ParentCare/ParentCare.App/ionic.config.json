@@ -1,0 +1,7 @@
+{
+  "name": "ParentCare.App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
