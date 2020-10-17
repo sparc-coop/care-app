@@ -13,7 +13,7 @@ export class Tab1Page {
   constructor(private deviceMotion: DeviceMotion) { }
 
   accelSubscription: Subscription;
-  const g = 9.80665;
+  readonly g = 9.80665;
 
 
   // http://ww2.cs.fsu.edu/~sposaro/publications/iFall.pdf

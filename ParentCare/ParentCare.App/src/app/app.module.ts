@@ -10,6 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +23,9 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
     StatusBar,
     SplashScreen,
     DeviceMotion,
+    NativeStorage,
+    CallNumber,
+    LocalNotifications,
     // { provide: DeviceMotion, useClass: DeviceMotionAccelerationData }
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
