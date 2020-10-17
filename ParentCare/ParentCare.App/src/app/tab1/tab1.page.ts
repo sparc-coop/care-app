@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Caretaker } from 'src/model/Caretaker';
 
 
 @Component({
@@ -8,43 +9,72 @@ import { Subscription } from 'rxjs';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
 
-  constructor(private deviceMotion: DeviceMotion) { }
+  
+  constructor(private callNumber: CallNumber,
+    private nativeStorage: NativeStorage) { }
 
-  accelSubscription: Subscription;
-  readonly g = 9.80665;
+  caretaker: Caretaker = new Caretaker();
+  validationMessages: string[] = [];
 
-
-  // http://ww2.cs.fsu.edu/~sposaro/publications/iFall.pdf
-  getCurrentAccel(){
-    // Get the device current acceleration
-    this.deviceMotion.getCurrentAcceleration().then(
-      (acceleration: DeviceMotionAccelerationData) => {  
-        console.log(acceleration);
-        var gforce = Math.sqrt(acceleration.x * acceleration.x + acceleration.y * acceleration.y + acceleration.z * acceleration.z) / this.g;
-        //http://ww2.cs.fsu.edu/~sposaro/publications/iFall.pdf
-        // If the amplitude crosses the lower and upper thresholds in the set duration period a fall is suspected
-
-        // the assumption is a fall can only start from an upright position and end in a horizontal position
-        //[14]. Thus the difference in position before and after the fall is close to 90 ◦
-        // [26]. A fall is only suspected if both thresholds are crossed within a duration and the position is changed.
-      },
-      (error: any) => console.log(error)
+  ngOnInit() {
+		this.loadCaretaker();
+  }
+  
+  loadCaretaker(){
+    this.nativeStorage.getItem('caretaker')
+    .then(
+      data => {
+        if (data){
+        this.caretaker = data;
+      }},
+      error => console.error(error)
     );
   }
 
-  watchAccel(){
-    // Watch device acceleration
-    this.accelSubscription = this.deviceMotion
-      .watchAcceleration()
-      .subscribe((acceleration: DeviceMotionAccelerationData) => {
-        console.log(acceleration);
-      });
+  call(){
+    if(!this.caretaker.Phone){
+      // TODO: ask user to fill in the caretaker data
+      return;
+    }
+
+    this.callNumber.callNumber(this.caretaker.Phone, true)
+    .then(res => console.log('Launched dialer!', res))
+    .catch(err => console.log('Error launching dialer', err));
   }
 
-  stopWatchAccel(){
-    // Stop watch
-    this.accelSubscription.unsubscribe();
+  saveCaretaker(){
+    this.nativeStorage.setItem('caretaker', this.caretaker)
+    .then(
+      () => console.log('Stored caretaker!'),
+      error => console.error('Error storing caretaker', error)
+    );
+
+    
+
+    // TODO: save to API 
+
+  }
+
+  validate(caretaker: Caretaker){
+    var valid = true;
+    this.validationMessages = [];
+
+    if (!caretaker.Name){
+      valid = false;
+      this.validationMessages.push("Please enter the caretaker name.")
+    }
+    if (!caretaker.Phone){
+      valid = false;
+      this.validationMessages.push("Please enter the caretaker phone.")
+    }
+
+    // if (!caretaker.Email){
+    //   valid = false;
+    //   this.validationMessages.push("Please enter the caretaker email address.")
+    // }
+
+    return valid;
   }
 }

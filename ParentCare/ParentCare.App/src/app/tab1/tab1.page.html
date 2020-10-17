@@ -1,19 +1,52 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      <p style="font-size: 18px;">Welcome to</p>
+      Tab 34
+      <p style="font-size: 22px;">Let's get you setup</p>
     </ion-title>
+    
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <p style="font-size: 18px;padding-top: 20px;">Welcome to</p>
+      <h1 style="margin: 10px 0px; font-size: 37px;font-weight: 600;">
+        CareAware
+      </h1>
+      <p style="font-size: 22px;">Let's get you setup</p>
     </ion-toolbar>
   </ion-header>
 
-  <button (click)="getCurrentAccel()">Get Accell</button>
+  <div class="form">
+    <div class="curve-top"></div>
+    <h4 style="margin-top: -10px;margin-bottom: 20px;">
+      Carer Information
+    </h4>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <div>
+      <label>Name</label>
+      <input [(ngModel)]="caretaker.Name" placeholder="Lara Murphy"/>
+    </div>
+
+    <div>
+      <label>Phone Number</label>
+      <input [(ngModel)]="caretaker.Phone" placeholder="202 555 0140" type="tel">
+    </div>
+
+    <div>
+      <label>Email</label>
+      <input [(ngModel)]="caretaker.Email" placeholder="lara@gmail.com (optional)" type="email">
+    </div>
+
+      <!-- todo: add a list of countries to (auto)select the Country Area Code -->
+
+    <button (click)="saveCaretaker()" style="margin-top: 15px;">Save</button>
+
+    <div class="validation-messages">
+      <p *ngFor="let message of validationMessages">{{message}}</p>
+    </div>
+  </div>
 </ion-content>

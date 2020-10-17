@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Caretaker } from 'src/app/tab3/tab3.page';
+import { Caretaker } from 'src/model/Caretaker';
+
+
 
 @Injectable({
 	providedIn: 'root'

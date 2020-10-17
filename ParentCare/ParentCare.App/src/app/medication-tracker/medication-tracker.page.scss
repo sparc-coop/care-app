@@ -62,6 +62,10 @@ input::placeholder {
     color:#868A8F;
 }
 
+ion-checkbox{
+    --background-checked: #7210FF; 
+}
+
 button{
     background: #7210FF;
     border-radius: 1000px;
