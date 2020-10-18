@@ -3,20 +3,16 @@
     border-radius: 0px 0px 24px 24px;
     .curve-top{
         top: 15px;
-        background: white;
         height: 15px;
-        border-radius: 24px 24px 0px 0px;
-        z-index: 1000;
-        position: absolute;
-        right: 0;
-        left: 0;
     }
 
-    background: #fff;
-    
-    // padding: 40px;
-    padding-top: 20px;
+    padding: 40px;
+    padding-top: 30px;
     margin-top: -80px;
+
+    label{
+        margin-bottom: 0px !important;
+    }
 
     input{
         margin-bottom: 20px;

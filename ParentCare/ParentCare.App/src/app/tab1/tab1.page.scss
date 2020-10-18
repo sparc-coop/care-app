@@ -3,14 +3,24 @@
     border-radius: 24px 24px 0px 0px;
 }
 
+label{
+    margin-bottom: 0px !important;
+}
+
 .form{
     .curve-top{
         top: 0px;
         height: 30px;
     }
+    .curve-bottom{
+        top: unset !important;
+        bottom: 0px;
+        height: 30px;
+    }
     
     padding: 40px;
     margin-top: -80px;
+    padding-bottom: 90px;
 
     input{
         margin-bottom: 20px;
