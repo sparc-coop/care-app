@@ -4,16 +4,14 @@ import { ModalController, Platform } from '@ionic/angular';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { MedicationAlarm } from 'src/model/MedicationAlarm';
-import { CreateMedication } from '../medication/create-medication/create-medication.page';
-
 
 @Component({
-  selector: 'app-medication-tracker',
-  templateUrl: 'medication-tracker.page.html',
-  styleUrls: ['medication-tracker.page.scss']
+  selector: 'app-create-medication',
+  templateUrl: 'create-medication.page.html',
+  styleUrls: ['create-medication.page.scss']
 })
-export class MedicationTracker implements OnInit{
-
+export class CreateMedication implements OnInit{
+  
   constructor(private localNotifications: LocalNotifications, 
     public platform: Platform, 
     private nativeStorage: NativeStorage,
@@ -23,6 +21,7 @@ export class MedicationTracker implements OnInit{
 
   newAlarm: MedicationAlarm = new MedicationAlarm();
   alarms: MedicationAlarm[] = [];
+
   validationMessages: string[] = [];
 
   public weekdays = [
@@ -77,13 +76,10 @@ export class MedicationTracker implements OnInit{
     
   }
 
-  async openModal(){
-    const modal = await this.modalController.create({
-      component: CreateMedication,
-      cssClass: 'create-medication-root',
-      swipeToClose: true,
+  closeModal(){
+    this.modalController.dismiss({
+      'dismissed': true
     });
-    return await modal.present();
   }
 
   createNotification(alarm: MedicationAlarm){

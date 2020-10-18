@@ -7,9 +7,16 @@
 </ion-header> -->
 
 <ion-content [fullscreen]="true">
+  <ion-fab vertical="top" horizontal="end" slot="fixed" (click)="openModal()">
+    <ion-fab-button size="small">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-header collapse="condense">
     <ion-toolbar>
-      <div>
+      <div class="toolbar">
+        
         <ion-icon name="calendar-outline"></ion-icon>
         <h1>
           Medication Tracker

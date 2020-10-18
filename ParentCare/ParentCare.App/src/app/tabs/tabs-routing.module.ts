@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../medication-tracker/medication-tracker.module').then(m => m.MedicationTrackerModule)
       },
       {
+        path: 'create-medication',
+        loadChildren: () => import('../medication/create-medication/create-medication.module').then(m => m.CreateMedicationModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

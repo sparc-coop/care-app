@@ -15,6 +15,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
