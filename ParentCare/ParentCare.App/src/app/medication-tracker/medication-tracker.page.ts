@@ -40,6 +40,9 @@ export class MedicationTracker implements OnInit{
   loadAlarms(){
     this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Cylocort" }));
     this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Neosoro" }));
+    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Hydrocodone" }));
+    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Levothyroxine" }));
+    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Amlodipine Besylate" }));
     return;
 
     this.nativeStorage.getItem('alarms')

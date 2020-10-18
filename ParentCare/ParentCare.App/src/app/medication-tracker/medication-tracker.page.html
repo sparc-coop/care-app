@@ -11,7 +11,7 @@
     <ion-toolbar>
       <div>
         <ion-icon name="calendar-outline"></ion-icon>
-        <h1 style="margin: 10px 0px; font-size: 22px;font-weight: 600;">
+        <h1>
           Medication Tracker
         </h1>
         <p>Next Up 9:00am</p>
@@ -19,31 +19,39 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
+  <div id="container" class="form">
+    <div class="curve-top"></div>
 
-    <ion-list>
+    <ion-list class="medication-list">
       <ion-item-sliding *ngFor="let alarm of alarms">
         <ion-item>
           <ion-label>
-            <ion-checkbox color="secondary"></ion-checkbox>
-            <h2>{{ alarm.Time | date:'hh:mm'}}</h2>
-            <aside>{{ alarm.Title }}</aside>
+            <div class="row no-gutters">
+              <div class="col-auto">
+                <ion-checkbox color="secondary"></ion-checkbox>
+              </div>
+              <div class="col ml-2 medication-info">
+                <h2>{{ alarm.Title }}</h2>
+                <aside>
+                  {{ alarm.Time | date:'h:mma' | lowercase}}
+                  <span class="mx-1">
+                    ·
+                  </span>
+                  
+                  <span style="color: #868A8F;">
+                    1 of 3 daily
+                  </span>
+                </aside>
+              </div>
+            </div>
+            
+            
           </ion-label>
         </ion-item>
       </ion-item-sliding>
     </ion-list>
 
-    <div class="row">
-      <div class="col">
-        One of three columns
-      </div>
-      <div class="col">
-        2 of three columns
-      </div>
-      <div class="col">
-        3 of three columns
-      </div>
-    </div>
+    
 
     <div class="form" style="display:none;">
       <ion-input [(ngModel)]="newAlarm.Title" placeholder="Medication"></ion-input>

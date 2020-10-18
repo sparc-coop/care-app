@@ -1,14 +1,10 @@
-#container{
-    background: pink;
-    border-radius: 24px 24px 0px 0px;
-}
-
 .form{
     position: relative;
+    border-radius: 0px 0px 24px 24px;
     .curve-top{
-        top: 0px;
+        top: 15px;
         background: white;
-        height: 30px;
+        height: 15px;
         border-radius: 24px 24px 0px 0px;
         z-index: 1000;
         position: absolute;
@@ -18,21 +14,50 @@
 
     background: #fff;
     
-    padding: 40px;
+    // padding: 40px;
+    padding-top: 20px;
     margin-top: -80px;
 
     input{
         margin-bottom: 20px;
         margin-top: 5px;
     }
+
+    ion-checkbox{
+        margin-top: 3px;
+    }
 }
 
 ion-header{
-padding-bottom: 50px;
+margin-bottom: 50px;
 
     ion-toolbar{
-        padding-bottom: 50px;
+        padding-top: 42px;
+        padding-bottom: 42px;
+
+        ion-icon{
+            font-size: 26px;
+        }
+
+        h1{
+            margin: 10px 0px; 
+            font-size: 22px;
+            font-weight: 600;
+        }
+        p{
+            font-size: 15px;
+        }
     }
+}
+
+ion-item{
+    --background: white;
+    --border-color: transparent;
+    border-bottom: 1px solid #EBEFF3;
+}
+
+.item-inner{
+    border-bottom: 0 !important;
 }
 
 input{
@@ -64,6 +89,12 @@ input::placeholder {
 
 ion-checkbox{
     --background-checked: #7210FF; 
+    --background: transparent;
+    --border-color: #7210FF;
+    --border-color-checked: #7210FF;
+    // --height: 24px;
+    // --width: 24px;
+    --size: 22px;
 }
 
 button{
@@ -79,4 +110,18 @@ label{
     font-size: 15px;
     line-height: 22px;
     color: #868A8F;
+}
+
+.medication-list{
+    .medication-info{
+        h2{
+            font-size: 18px;
+            // font-weight: 600;
+        }
+        
+        aside{
+            font-size: 12px;
+            color: #640CE3;
+        }
+    }
 }
