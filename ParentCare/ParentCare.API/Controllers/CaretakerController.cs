@@ -9,6 +9,7 @@ using ParentCare.Model.Medications.Commands;
 using ParentCare.API.Helpers;
 using ParentCare.Model.Medications;
 using Kuvio.Kernel.Core;
+using ParentCare.Model.Users;
 
 namespace ParentCare.API.Controllers
 {
@@ -24,16 +25,9 @@ namespace ParentCare.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public Task<Caretaker> Get([FromServices] IRepository<Caretaker> caretakerRepository)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            caretakerRepository.Query.Where(x => x.ElderId == User.Id())
         }
 
         [HttpPost]

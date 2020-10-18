@@ -14,6 +14,10 @@ export class CaretakerService {
 	url = environment.apiUrl + 'Caretaker';
 	constructor(private http: HttpClient) { }
 
+	get(): Observable<any> {
+		return this.http.get(`${this.url}`);
+	}
+
 	post(caretaker: Caretaker): Observable<any> {
 		return this.http.post(`${this.url}`, caretaker);
 	}

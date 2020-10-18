@@ -30,16 +30,16 @@
     <div class="curve-top"></div>
 
     <ion-list class="medication-list">
-      <ion-item-sliding *ngFor="let alarm of alarms">
+      <ion-item-sliding *ngFor="let alarm of getOrderedAlarms()">
         <ion-item>
           <ion-label>
             <div class="row no-gutters">
               <div class="col-auto">
-                <ion-checkbox color="secondary"></ion-checkbox>
+                <ion-checkbox color="secondary" [(ngModel)]="alarm.Taken"></ion-checkbox>
               </div>
               <div class="col ml-2 medication-info">
-                <h2>{{ alarm.Title }}</h2>
-                <aside>
+                <h2 [ngStyle]="alarm.Taken?{'text-decoration': 'line-through', 'color': '#868A8F'} : ''">{{ alarm.Title }}</h2>
+                <aside [ngStyle]="alarm.Taken?{'color': '#868A8F'} : ''">
                   {{ alarm.Date | date:'h:mma' | lowercase}}
                   <span class="mx-1">
                     ·

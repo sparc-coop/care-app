@@ -39,11 +39,11 @@ export class MedicationTracker implements OnInit{
 	}
 
   loadAlarms(){
-    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 60*60000), Title: "Cylocort" }));
+    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 360*60000), Title: "Cylocort" }));
     this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 120*60000), Title: "Neosoro" }));
     this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 180*60000), Title: "Hydrocodone" }));
     this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 240*60000), Title: "Levothyroxine" }));
-    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 360*60000), Title: "Amlodipine Besylate" }));
+    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 60*60000), Title: "Amlodipine Besylate" }));
     return;
 
     this.nativeStorage.getItem('alarms')
@@ -54,8 +54,8 @@ export class MedicationTracker implements OnInit{
   }
 
   getOrderedAlarms(){
-    return this.alarms;
-    // return this.sortBy(this.alarms, )
+    // return this.alarms.sort((a,b) => a.Date > b.Date ? 1 : 0);
+    return this.alarms.sort((a,b) => a.Taken ? 1 : 0 || a.Date > b.Date ? 1 : 0);
   }
 
   sortBy(arr: any[], prop: string) {
