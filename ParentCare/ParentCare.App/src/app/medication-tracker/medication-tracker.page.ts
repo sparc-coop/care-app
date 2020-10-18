@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { MedicationAlarm } from 'src/model/MedicationAlarm';
+import { MedicationAlarm } from 'src/model/MedicationDefinition';
 import { CreateMedication } from '../medication/create-medication/create-medication.page';
 
 
@@ -18,10 +18,9 @@ export class MedicationTracker implements OnInit{
     public platform: Platform, 
     private nativeStorage: NativeStorage,
     public modalController: ModalController) {
-    // this.newAlarm = new MedicationAlarm();
+    
   }
 
-  newAlarm: MedicationAlarm = new MedicationAlarm();
   alarms: MedicationAlarm[] = [];
   validationMessages: string[] = [];
 
@@ -40,11 +39,11 @@ export class MedicationTracker implements OnInit{
 	}
 
   loadAlarms(){
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Cylocort" }));
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Neosoro" }));
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Hydrocodone" }));
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Levothyroxine" }));
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Amlodipine Besylate" }));
+    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 60*60000), Title: "Cylocort" }));
+    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 120*60000), Title: "Neosoro" }));
+    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 180*60000), Title: "Hydrocodone" }));
+    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 240*60000), Title: "Levothyroxine" }));
+    this.alarms.push(new MedicationAlarm({Date: new Date(new Date().getTime() - 360*60000), Title: "Amlodipine Besylate" }));
     return;
 
     this.nativeStorage.getItem('alarms')
@@ -54,27 +53,13 @@ export class MedicationTracker implements OnInit{
     );
   }
 
-  saveAlarm() {
-    if (!this.validate(this.newAlarm)){
-      return;
-    }
+  getOrderedAlarms(){
+    return this.alarms;
+    // return this.sortBy(this.alarms, )
+  }
 
-    var selectedWeekdays = this.weekdays.reduce((a, o) => (o.isChecked && a.push(o.val), a), []);
-    console.log(selectedWeekdays);      
-    console.log("SAVE ALARM");
-    this.newAlarm.Weekdays = selectedWeekdays;
-    this.newAlarm.Time = new Date(this.newAlarm.Time);
-    this.createNotification(this.newAlarm);
-    this.alarms.push(this.newAlarm);
-    this.newAlarm = new MedicationAlarm();
-
-    this.nativeStorage.setItem('alarms', this.alarms)
-    .then(
-      () => console.log('Stored item!'),
-      error => console.error('Error storing item', error)
-    );
-
-    
+  sortBy(arr: any[], prop: string) {
+    return arr.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
   }
 
   async openModal(){
@@ -85,46 +70,4 @@ export class MedicationTracker implements OnInit{
     });
     return await modal.present();
   }
-
-  createNotification(alarm: MedicationAlarm){
-    // this.localNotifications.requestPermission(function (granted) { console.log(""); });
-    // https://github.com/katzer/cordova-plugin-local-notifications
-
-    console.log(alarm.Time);
-
-    if (!alarm.Weekdays){
-      // TODO: run only once if no weekdays are selected
-      this.localNotifications.schedule({
-        title: alarm.Title,
-        sound: this.platform.is("android") ? 'file://sound.mp3': 'file://beep.caf',
-        trigger: { every: { hour: alarm.Time.getHours(), minute: alarm.Time.getMinutes() }}
-      });
-    }
-    else{
-      for (var i = 0; i < alarm.Weekdays.length; i++) {
-        this.localNotifications.schedule({
-          title: alarm.Title,
-          sound: this.platform.is("android") ? 'file://sound.mp3': 'file://beep.caf',
-          trigger: { every: { weekday: alarm.Weekdays[i], hour: alarm.Time.getHours(), minute: alarm.Time.getMinutes() } }
-        });
-      }
-    }
-  }
-
-  validate(alarm: MedicationAlarm){
-    var valid = true;
-    this.validationMessages = [];
-
-    if (!alarm.Time){
-      valid = false;
-      this.validationMessages.push("Please set a time.")
-    }
-    if (!alarm.Title){
-      valid = false;
-      this.validationMessages.push("Please enter the medication name.")
-    }
-
-    return valid;
-  }
-
 }

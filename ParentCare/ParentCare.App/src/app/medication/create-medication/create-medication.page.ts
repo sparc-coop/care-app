@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { MedicationAlarm } from 'src/model/MedicationAlarm';
+import { MedicationDefinition } from 'src/model/MedicationDefinition';
 
 @Component({
   selector: 'app-create-medication',
@@ -16,11 +16,11 @@ export class CreateMedication implements OnInit{
     public platform: Platform, 
     private nativeStorage: NativeStorage,
     public modalController: ModalController) {
-    // this.newAlarm = new MedicationAlarm();
+    // this.newAlarm = new MedicationDefinition();
   }
 
-  newAlarm: MedicationAlarm = new MedicationAlarm();
-  alarms: MedicationAlarm[] = [];
+  newAlarm: MedicationDefinition = new MedicationDefinition();
+  alarms: MedicationDefinition[] = [];
 
   validationMessages: string[] = [];
 
@@ -39,11 +39,11 @@ export class CreateMedication implements OnInit{
 	}
 
   loadAlarms(){
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Cylocort" }));
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Neosoro" }));
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Hydrocodone" }));
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Levothyroxine" }));
-    this.alarms.push(new MedicationAlarm({Time: new Date(), Title: "Amlodipine Besylate" }));
+    this.alarms.push(new MedicationDefinition({Time: new Date(), Title: "Cylocort" }));
+    this.alarms.push(new MedicationDefinition({Time: new Date(), Title: "Neosoro" }));
+    this.alarms.push(new MedicationDefinition({Time: new Date(), Title: "Hydrocodone" }));
+    this.alarms.push(new MedicationDefinition({Time: new Date(), Title: "Levothyroxine" }));
+    this.alarms.push(new MedicationDefinition({Time: new Date(), Title: "Amlodipine Besylate" }));
     return;
 
     this.nativeStorage.getItem('alarms')
@@ -65,7 +65,7 @@ export class CreateMedication implements OnInit{
     this.newAlarm.Time = new Date(this.newAlarm.Time);
     this.createNotification(this.newAlarm);
     this.alarms.push(this.newAlarm);
-    this.newAlarm = new MedicationAlarm();
+    this.newAlarm = new MedicationDefinition();
 
     this.nativeStorage.setItem('alarms', this.alarms)
     .then(
@@ -73,6 +73,7 @@ export class CreateMedication implements OnInit{
       error => console.error('Error storing item', error)
     );
 
+    this.closeModal();
     
   }
 
@@ -82,7 +83,7 @@ export class CreateMedication implements OnInit{
     });
   }
 
-  createNotification(alarm: MedicationAlarm){
+  createNotification(alarm: MedicationDefinition){
     // this.localNotifications.requestPermission(function (granted) { console.log(""); });
     // https://github.com/katzer/cordova-plugin-local-notifications
 
@@ -107,7 +108,7 @@ export class CreateMedication implements OnInit{
     }
   }
 
-  validate(alarm: MedicationAlarm){
+  validate(alarm: MedicationDefinition){
     var valid = true;
     this.validationMessages = [];
 
