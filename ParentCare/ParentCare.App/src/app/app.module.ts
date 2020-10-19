@@ -13,6 +13,8 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { CaretakerService } from './services/caretaker/caretaker.service';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 
 
@@ -27,6 +29,9 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
     NativeStorage,
     CallNumber,
     LocalNotifications,
+    CaretakerService,
+    HttpClient,
+    HttpHandler,
     // { provide: DeviceMotion, useClass: DeviceMotionAccelerationData }
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

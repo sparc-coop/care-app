@@ -21,4 +21,8 @@ export class CaretakerService {
 	post(caretaker: Caretaker): Observable<any> {
 		return this.http.post(`${this.url}`, caretaker);
 	}
+
+	put(caretaker: Caretaker): Observable<any> {
+		return this.http.put(`${this.url}`, caretaker);
+	}
 }

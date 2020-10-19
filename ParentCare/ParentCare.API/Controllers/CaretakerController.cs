@@ -10,6 +10,7 @@ using ParentCare.API.Helpers;
 using ParentCare.Model.Medications;
 using Kuvio.Kernel.Core;
 using ParentCare.Model.Users;
+using System.Linq.Dynamic.Core;
 
 namespace ParentCare.API.Controllers
 {
@@ -25,25 +26,33 @@ namespace ParentCare.API.Controllers
         }
 
         [HttpGet]
-        public Task<Caretaker> Get([FromServices] IRepository<Caretaker> caretakerRepository)
+        public Caretaker Get([FromServices] IRepository<Caretaker> caretakerRepository)
         {
-            caretakerRepository.Query.Where(x => x.ElderId == User.Id())
+            var caretaker = caretakerRepository.Query.Where(x => x.ElderId == User.ID()).FirstOrDefault();
+            return caretaker;
         }
 
         [HttpPost]
-        public async Task<MedicationAlert> Post([FromServices] CreateMedicationAlertCommand medicationAlertCommand, [FromBody] MedicationAlertModel model)
+        public async Task<Caretaker> Post([FromServices] IRepository<Caretaker> caretakerRepository, [FromBody] Caretaker model)
         {
-            var entity = await medicationAlertCommand.Execute(User.Id(), model);
-            return entity;
+            model.ElderId = User.ID();
+            model.CreateDateUtc = DateTime.UtcNow;
+
+            await caretakerRepository.AddAsync(model);
+            await caretakerRepository.CommitAsync();
+            return model;
         }
 
-        [HttpPut]
-        public async Task<MedicationAlert> TakeMedication([FromServices] TakeMedicationCommand takeMedicationCommand, [FromBody] TakeMedicationModel model)
+        [HttpPost]
+        public async Task<Caretaker> Put([FromServices] IRepository<Caretaker> caretakerRepository, [FromBody] Caretaker model)
         {
-            var entity = await takeMedicationCommand.Execute(User.Id(), model);
-            return entity;
-        }
+            model.ElderId = User.ID();
+            model.CreateDateUtc = DateTime.UtcNow;
 
+            await caretakerRepository.UpdateAsync(model);
+            await caretakerRepository.CommitAsync();
+            return model;
+        }
 
         [HttpDelete]
         public async Task<MedicationAlert> Delete([FromServices] IRepository<MedicationAlert> medicationRepository, int id)
@@ -56,4 +65,6 @@ namespace ParentCare.API.Controllers
 
         
     }
+
+    
 }

@@ -29,7 +29,7 @@ namespace ParentCare.API.Helpers
             ?? principal.Get("surname")
             ?? principal.Get(ClaimTypes.Name);
 
-        public static int Id(this ClaimsPrincipal principal)
+        public static int ID(this ClaimsPrincipal principal)
         {
             return 1;
             //return principal.FindFirst(x => x.Type == "Id)?.Value;

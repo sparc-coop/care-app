@@ -21,7 +21,7 @@ namespace ParentCare.Model.Medications.Commands
             _medicationRepository = medicationRepository;
         }
 
-        public async Task<MedicationAlert> Execute(int userId, MedicationAlertModel model)
+        public async Task<MedicationAlert> Execute(int userId, TakeMedicationModel model)
         {
             var medication = await _medicationRepository.FindAsync(x => x.Id == model.Id && x.UserId == userId);
             medication.Take();

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Caretaker } from 'src/model/Caretaker';
+import { CaretakerService } from '../services/caretaker/caretaker.service';
 
 
 @Component({
@@ -13,7 +14,8 @@ export class Tab1Page implements OnInit {
 
   
   constructor(private callNumber: CallNumber,
-    private nativeStorage: NativeStorage) { }
+    private nativeStorage: NativeStorage,
+    private caretakerService: CaretakerService) { }
 
   caretaker: Caretaker = new Caretaker();
   validationMessages: string[] = [];
@@ -45,13 +47,18 @@ export class Tab1Page implements OnInit {
   }
 
   saveCaretaker(){
-    this.nativeStorage.setItem('caretaker', this.caretaker)
-    .then(
-      () => console.log('Stored caretaker!'),
-      error => console.error('Error storing caretaker', error)
-    );
+    // this.nativeStorage.setItem('caretaker', this.caretaker)
+    // .then(
+    //   () => console.log('Stored caretaker!'),
+    //   error => console.error('Error storing caretaker', error)
+    // );
 
-    
+    if (this.caretaker.Id){
+      this.caretakerService.put(this.caretaker);
+    }
+    else{
+      this.caretakerService.post(this.caretaker);
+    }
 
     // TODO: save to API 
 

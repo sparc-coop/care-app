@@ -44,14 +44,14 @@ namespace ParentCare.API.Controllers
         [HttpPost]
         public async Task<MedicationAlert> Post([FromServices] CreateMedicationAlertCommand medicationAlertCommand, [FromBody] MedicationAlertModel model)
         {
-            var entity = await medicationAlertCommand.Execute(User.Id(), model);
+            var entity = await medicationAlertCommand.Execute(User.ID(), model);
             return entity;
         }
 
         [HttpPut]
         public async Task<MedicationAlert> TakeMedication([FromServices] TakeMedicationCommand takeMedicationCommand, [FromBody] TakeMedicationModel model)
         {
-            var entity = await takeMedicationCommand.Execute(User.Id(), model);
+            var entity = await takeMedicationCommand.Execute(User.ID(), model);
             return entity;
         }
 
